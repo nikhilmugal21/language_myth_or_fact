@@ -137,7 +137,6 @@ CARDS: List[Dict] = [
         "difficulty": "easy",
         "category": "sociolinguistics",
     },
-    # Adding more cards for variety
     {
         "id": 9,
         "statement": "Artificial languages like Esperanto can never become natural languages.",
@@ -166,10 +165,6 @@ CARDS: List[Dict] = [
         "difficulty": "hard",
         "category": "biolinguistics",
     },
-]
-
-# Add more cards to the existing ones
-CARDS.extend([
     {
         "id": 11,
         "statement": "There's only one correct English.",
@@ -198,7 +193,7 @@ CARDS.extend([
         "difficulty": "easy",
         "category": "developmental linguistics",
     }
-])
+]
 
 # -----------------------------
 # Enhanced Themes with more visual variety
@@ -257,13 +252,6 @@ LANG_SVG = r"""
         <feMergeNode in="SourceGraphic"/>
       </feMerge>
     </filter>
-    <filter id="subtle-glow">
-      <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
-      <feMerge>
-        <feMergeNode in="coloredBlur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
     <linearGradient id="main-grad" x1="0" x2="1">
       <stop offset="0" stop-color="rgba(126,231,214,1)"/>
       <stop offset="0.3" stop-color="rgba(130,87,229,1)"/>
@@ -277,7 +265,6 @@ LANG_SVG = r"""
     </radialGradient>
   </defs>
   
-  <!-- Background decorative circles -->
   <g opacity="0.15">
     <circle cx="80" cy="60" r="45" fill="url(#circle-grad)"/>
     <circle cx="820" cy="50" r="40" fill="url(#circle-grad)"/>
@@ -287,7 +274,6 @@ LANG_SVG = r"""
     <circle cx="350" cy="115" r="18" fill="url(#circle-grad)"/>
   </g>
   
-  <!-- Main language characters with enhanced styling -->
   <g filter="url(#glow)" opacity="0.95" fill="url(#main-grad)" font-family="ui-sans-serif, system-ui" font-weight="700">
     <text x="60" y="74" font-size="48">Aa</text>
     <text x="160" y="116" font-size="36">あ</text>
@@ -301,7 +287,6 @@ LANG_SVG = r"""
     <text x="770" y="116" font-size="36">한</text>
   </g>
   
-  <!-- Decorative connecting lines -->
   <g opacity="0.25">
     <path d="M40 128 C140 116, 220 132, 320 120 C420 108, 500 132, 600 118 C700 104, 780 132, 860 120"
           fill="none" stroke="url(#main-grad)" stroke-width="2.5" stroke-dasharray="6 8"/>
@@ -309,7 +294,6 @@ LANG_SVG = r"""
           fill="none" stroke="url(#main-grad)" stroke-width="1.5" stroke-dasharray="4 6" opacity="0.6"/>
   </g>
   
-  <!-- Small accent dots -->
   <g fill="url(#main-grad)" opacity="0.4">
     <circle cx="130" cy="25" r="2"/>
     <circle cx="280" cy="35" r="2"/>
@@ -392,7 +376,7 @@ st.sidebar.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# Theme selection with preview
+# Theme selection
 st.session_state.theme = st.sidebar.selectbox(
     "🎨 Visual Theme", 
     list(THEMES.keys()),
@@ -489,7 +473,6 @@ st.markdown(
     max-width: 900px;
 }}
 
-/* Enhanced header banner */
 .lang-banner {{
     width: 100%;
     height: 140px;
@@ -515,7 +498,6 @@ st.markdown(
     pointer-events: none;
 }}
 
-/* Enhanced button styling */
 div.stButton > button {{
     border-radius: 18px !important;
     padding: 0.9rem 1.2rem !important;
@@ -545,14 +527,12 @@ div.stButton > button:active {{
         inset 0 1px 0 rgba(255,255,255,0.1) !important;
 }}
 
-/* Enhanced progress bar */
 .stProgress > div > div > div > div {{
     background: linear-gradient(90deg, var(--primary-accent), var(--secondary-accent)) !important;
     border-radius: 10px !important;
     box-shadow: 0 0 20px rgba(126,231,214,0.3) !important;
 }}
 
-/* Enhanced metrics */
 div[data-testid="metric-container"] {{
     background: rgba(255,255,255,0.06);
     border: 1px solid rgba(255,255,255,0.12);
@@ -573,14 +553,6 @@ div[data-testid="metric-container"] > div {{
     text-shadow: var(--text-glow) !important;
 }}
 
-/* Enhanced sidebar */
-.css-1d391kg {{
-    background: rgba(0,0,0,0.2) !important;
-    border-right: 1px solid rgba(255,255,255,0.1) !important;
-    backdrop-filter: blur(15px) !important;
-}}
-
-/* Success/error styling */
 .stSuccess, .stError, .stInfo {{
     border-radius: 12px !important;
     border: none !important;
@@ -602,7 +574,6 @@ div[data-testid="metric-container"] > div {{
     border-left: 4px solid #2196f3 !important;
 }}
 
-/* Animation classes */
 .fade-in {{
     animation: fadeIn 0.5s ease-in-out;
 }}
@@ -621,7 +592,52 @@ div[data-testid="metric-container"] > div {{
     50% {{ transform: scale(1.05); }}
     100% {{ transform: scale(1); }}
 }}
+</style>
+""",
+    unsafe_allow_html=True,
+)
 
-/* Enhanced title styling */
-.main-title {{
-    background: linear-gradient(135deg,
+# -----------------------------
+# Header
+# -----------------------------
+st.markdown(
+    f"""
+<div class="lang-banner">
+  <img src="{banner_uri}" style="width:100%; height:100%; object-fit:cover;" />
+</div>
+""",
+    unsafe_allow_html=True,
+)
+
+st.title("🌍 LinguaCard - Language Myths & Facts")
+st.caption("🎯 Choose **True** or **False**, then **flip** to reveal explanations and discussion prompts.")
+
+# -----------------------------
+# Game Logic
+# -----------------------------
+card = get_card()
+if card is None:
+    # Game complete screen
+    total = len(st.session_state.deck)
+    elapsed_time = time.time() - st.session_state.start_time
+    minutes = int(elapsed_time // 60)
+    seconds = int(elapsed_time % 60)
+    achievement = get_achievement_level(st.session_state.score, total)
+    
+    st.success(f"🎉 **Game Complete!** {achievement}")
+    
+    # Results display
+    col1, col2, col3, col4 = st.columns(4)
+    with col1:
+        st.metric("Final Score", f"{st.session_state.score}/{total}")
+    with col2:
+        percentage = (st.session_state.score / total) * 100
+        st.metric("Accuracy", f"{percentage:.1f}%")
+    with col3:
+        st.metric("Best Streak", f"{st.session_state.best_streak} 🔥")
+    with col4:
+        st.metric("Time", f"{minutes}:{seconds:02d}")
+    
+    with st.expander("📋 Review Your Session", expanded=False):
+        for h in st.session_state.history:
+            icon = "✅" if h["correct"] else "❌"*
