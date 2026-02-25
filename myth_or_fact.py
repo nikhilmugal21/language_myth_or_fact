@@ -3,7 +3,7 @@ from typing import Dict, List
 
 import streamlit as st
 
-st.set_page_config(page_title="🎯 Guess: Myth or Fact?", page_icon="📚", layout="centered")
+st.set_page_config(page_title="Tongues of Deception: The Myths we speak", page_icon="📚", layout="centered")
 
 CARDS: List[Dict[str, object]] = [
     {
@@ -34,7 +34,7 @@ CARDS: List[Dict[str, object]] = [
         ],
     },
     {
-        "statement": "African American English (AAE) is bad English.",
+        "statement": "Bambaiyya Hindi is a form of broken Hindi.",
         "label": "MYTH",
         "explanation": "AAE has consistent grammar and linguistic rules. It is a legitimate dialect, not incorrect English.",
         "discussion": [
@@ -106,7 +106,7 @@ CARDS: List[Dict[str, object]] = [
         ],
     },
     {
-        "statement": "Babies can distinguish many speech sounds at birth.",
+        "statement": "Babies can distinguish many speech sounds at infancy.",
         "label": "FACT",
         "explanation": "Infants initially detect many phonetic contrasts. Over time, they specialize in sounds most relevant to the languages they hear.",
         "discussion": [
