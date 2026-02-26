@@ -323,6 +323,8 @@ if "deck" not in st.session_state:
 
 st.markdown(
     """
+    st.markdown(
+    """
     <style>
     .stApp {
         background:
@@ -330,13 +332,13 @@ st.markdown(
             radial-gradient(circle at 88% 5%, rgba(198, 226, 255, 0.55), transparent 35%),
             radial-gradient(circle at 50% 100%, rgba(199, 245, 221, 0.55), transparent 40%),
             linear-gradient(150deg, #fff6fb 0%, #f3f8ff 44%, #f6fff8 100%);
-        color: #3d3a56;
+        color: #2d2942;
     }
     .hero {
-        background: rgba(255, 255, 255, 0.8);
-        border: 1px solid rgba(217, 204, 255, 0.7);
+        background: rgba(255, 255, 255, 0.92);
+        border: 1px solid rgba(184, 166, 245, 0.65);
         border-radius: 24px;
-        box-shadow: 0 16px 34px rgba(161, 151, 203, 0.25);
+        box-shadow: 0 16px 34px rgba(125, 115, 174, 0.22);
         padding: 1.1rem 1.3rem;
         margin-bottom: 1rem;
         position: relative;
@@ -354,10 +356,16 @@ st.markdown(
         border-radius: 22px;
         padding: 1.2rem;
         margin-bottom: .8rem;
-        border: 1px solid rgba(255, 255, 255, 0.9);
-        box-shadow: 0 18px 30px rgba(154, 163, 191, 0.24);
+        border: 1px solid rgba(255, 255, 255, 0.95);
+        box-shadow: 0 18px 30px rgba(99, 108, 142, 0.24);
         position: relative;
         overflow: hidden;
+        animation: cardIn .42s ease-out;
+        transition: transform .25s ease, box-shadow .25s ease;
+    }
+    .flashcard:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 22px 32px rgba(99, 108, 142, 0.28);
     }
     .flashcard::after {
         content: "";
@@ -366,54 +374,75 @@ st.markdown(
         top: -45px;
         width: 130px;
         height: 130px;
-        background: rgba(255, 255, 255, .42);
+        background: rgba(255, 255, 255, .46);
+        border-radius: 50%;
+        z-index: 0;
+    }
+    .flashcard::before {
+        content: "";
+        position: absolute;
+        left: -40px;
+        bottom: -40px;
+        width: 120px;
+        height: 120px;
+        background: rgba(255, 255, 255, .32);
         border-radius: 50%;
         z-index: 0;
     }
     .flashcard > * { position: relative; z-index: 1; }
-    .pastel-a { background: linear-gradient(145deg, #ffe9f2 0%, #ffe0ef 100%); }
-    .pastel-b { background: linear-gradient(145deg, #e9f5ff 0%, #deefff 100%); }
-    .pastel-c { background: linear-gradient(145deg, #ebfff4 0%, #ddfaea 100%); }
-    .pastel-d { background: linear-gradient(145deg, #fff9df 0%, #fff2c9 100%); }
+    .pastel-a { background: linear-gradient(145deg, #ffe6f2 0%, #ffdced 100%); }
+    .pastel-b { background: linear-gradient(145deg, #e7f4ff 0%, #dcecff 100%); }
+    .pastel-c { background: linear-gradient(145deg, #e6fff2 0%, #d7f8e8 100%); }
+    .pastel-d { background: linear-gradient(145deg, #fff8dd 0%, #ffefc4 100%); }
+
     .chip {
         display: inline-block;
-        padding: .2rem .65rem;
+        padding: .22rem .7rem;
         border-radius: 999px;
-        font-size: .8rem;
-        font-weight: 700;
+        font-size: .82rem;
+        font-weight: 800;
         letter-spacing: .04em;
+        color: #2d2942;
     }
-    .myth { background: rgba(255, 129, 157, 0.26); border: 1px solid rgba(255, 108, 139, 0.55); }
-    .fact { background: rgba(132, 228, 176, 0.28); border: 1px solid rgba(98, 200, 146, 0.55); }
-    .subtle {
-        opacity: .84;
-    }
+    .myth { background: rgba(255, 110, 146, 0.33); border: 1px solid rgba(201, 63, 105, 0.65); }
+    .fact { background: rgba(99, 214, 150, 0.35); border: 1px solid rgba(39, 161, 103, 0.62); }
+
+    .subtle { opacity: .88; color: #3b3658; }
     .decor {
         font-size: 1.1rem;
         opacity: 0.75;
         margin-top: .3rem;
     }
 
-    /* Ensure button text stays visible in all states */
+    /* Strong contrast buttons */
     .stButton > button {
         background: #ffffff !important;
-        color: #3d3a56 !important;
-        border: 1px solid #d8d2ef !important;
-        font-weight: 700 !important;
+        color: #2a2543 !important;
+        border: 1px solid #bfaee8 !important;
+        font-weight: 800 !important;
+        box-shadow: 0 4px 10px rgba(80, 60, 140, 0.10) !important;
     }
     .stButton > button:hover {
-        background: #f4efff !important;
-        color: #2f2a4d !important;
-        border-color: #bfb4e8 !important;
+        background: #efe8ff !important;
+        color: #1f1a35 !important;
+        border-color: #9e88dc !important;
     }
     .stButton > button:focus,
     .stButton > button:focus-visible,
     .stButton > button:active {
-        color: #2f2a4d !important;
-        border-color: #a895dd !important;
-        box-shadow: 0 0 0 0.2rem rgba(168, 149, 221, 0.25) !important;
+        color: #1f1a35 !important;
+        border-color: #8f78d8 !important;
+        box-shadow: 0 0 0 0.2rem rgba(143, 120, 216, 0.25) !important;
+    }
+
+    @keyframes cardIn {
+        from { opacity: 0; transform: translateY(8px) scale(.99); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
     }
     </style>
+    """,
+    unsafe_allow_html=True,
+)
     """,
     unsafe_allow_html=True,
 )
@@ -486,7 +515,8 @@ if st.button("🔁 Flip Card" if not st.session_state.flipped else "🙈 Hide Ba
 if st.session_state.flipped:
     label = str(card["label"])
     cls = "fact" if label == "FACT" else "myth"
-    st.markdown(f"<span class='chip {cls}'>{label}</span>", unsafe_allow_html=True)
+    icon = "✅" if label == "FACT" else "🧠"
+    st.markdown(f"<span class='chip {cls}'>{icon} {label}</span>", unsafe_allow_html=True)
     st.markdown("#### Explanation")
     st.write(card["explanation"])
     st.markdown("#### Discussion starters")
