@@ -11,15 +11,6 @@ MYTHS_PER_ROUND = 10
 
 CARDS: List[Dict[str, object]] = [
     {
-        "statement": "English is the only language of success in India.",
-        "label": "MYTH",
-        "explanation": "Many people in India succeed using regional languages in business, government, arts, and education. English may help in certain careers, especially global ones, but it is not the only path to success. Multilingual ability is actually one of India’s strengths.",
-        "discussion": [
-            "Why is English linked with social status?",
-            "Can regional languages also open doors to opportunity?",
-        ],
-    },
-    {
         "statement": "Sanskrit is the mother of all Indian languages.",
         "label": "MYTH",
         "explanation": "Many North Indian languages were influenced by Sanskrit, but South Indian languages like Tamil and Telugu developed from a different language family. Languages can influence each other without being directly related.",
@@ -637,7 +628,7 @@ st.markdown(
 st.markdown(
     """
     <div class='hero'>
-        <h2 style='margin: 0;'>🎯 Language Myth or Fact</h2>
+        <h2 style='margin: 0;'>🎯 Tongues of Deception: The Myths we speak</h2>
         <p class='subtle' style='margin: .3rem 0 0 0;'>Pick Myth or Fact, flip to reveal, and learn from each explanation.</p>
         <div class='decor'>🧠 💬 🌸 📘</div>
     </div>
