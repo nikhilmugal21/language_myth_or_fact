@@ -323,8 +323,6 @@ if "deck" not in st.session_state:
 
 st.markdown(
     """
-    st.markdown(
-    """
     <style>
     .stApp {
         background:
@@ -394,7 +392,6 @@ st.markdown(
     .pastel-b { background: linear-gradient(145deg, #e7f4ff 0%, #dcecff 100%); }
     .pastel-c { background: linear-gradient(145deg, #e6fff2 0%, #d7f8e8 100%); }
     .pastel-d { background: linear-gradient(145deg, #fff8dd 0%, #ffefc4 100%); }
-
     .chip {
         display: inline-block;
         padding: .22rem .7rem;
@@ -406,7 +403,6 @@ st.markdown(
     }
     .myth { background: rgba(255, 110, 146, 0.33); border: 1px solid rgba(201, 63, 105, 0.65); }
     .fact { background: rgba(99, 214, 150, 0.35); border: 1px solid rgba(39, 161, 103, 0.62); }
-
     .subtle { opacity: .88; color: #3b3658; }
     .decor {
         font-size: 1.1rem;
@@ -443,14 +439,11 @@ st.markdown(
     """,
     unsafe_allow_html=True,
 )
-    """,
-    unsafe_allow_html=True,
-)
 
 st.markdown(
     """
     <div class='hero'>
-        <h2 style='margin: 0;'>🎯 Tongues of Deception: Facts & Myths</h2>
+        <h2 style='margin: 0;'>🎯 Language Myth or Fact</h2>
         <p class='subtle' style='margin: .3rem 0 0 0;'>Pick Myth or Fact, flip to reveal, and learn from each explanation.</p>
         <div class='decor'>🧠 💬 🌸 📘</div>
     </div>
