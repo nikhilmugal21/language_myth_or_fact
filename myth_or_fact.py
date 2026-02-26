@@ -72,18 +72,9 @@ CARDS: List[Dict[str, object]] = [
         ],
     },
     {
-        "statement": "English-medium education makes children smarter.",
-        "label": "MYTH",
-        "explanation": "Intelligence does not depend on language. Research shows children often learn better in their mother tongue, especially in early years. Understanding concepts clearly is more important than the language used.",
-        "discussion": [
-            "Is it easier to learn complex ideas in your first language?",
-            "Should schools promote mother-tongue education?",
-        ],
-    },
-    {
         "statement": "All South Indians speak the same language.",
         "label": "MYTH",
-        "explanation": "South India has several major languages that are different from each other. Tamil is not the same as Telugu or Kannada. Each has its own history and literature.",
+        "explanation": "South India has several major languages that are different from each other. Tamil is not the same as Telugu, Kannada or Malayalam. Each has its own history and literature.",
         "discussion": [
             "Why do people simplify linguistic diversity?",
             "How does language connect to regional pride?",
@@ -164,7 +155,7 @@ CARDS: List[Dict[str, object]] = [
     {
         "statement": "Hindi and Urdu are completely different languages.",
         "label": "MYTH",
-        "explanation": "In everyday conversation, Hindi and Urdu are very similar and speakers can usually understand each other. The main differences are script and some formal vocabulary.",
+        "explanation": "In everyday conversation, Hindi and Urdu are very similar and speakers can usually understand each other. The main differences are scripts and some formal vocabularies.",
         "discussion": [
             "When do two ways of speaking become separate languages?",
             "Is the difference based more on language or politics?",
@@ -180,15 +171,6 @@ CARDS: List[Dict[str, object]] = [
         ],
     },
     {
-        "statement": "English will eventually replace all other languages.",
-        "label": "MYTH",
-        "explanation": "English is widely used, but people around the world continue to speak their home languages. Many people use English in addition to their native language, not instead of it.",
-        "discussion": [
-            "Is the world becoming monolingual or multilingual?",
-            "What helps a language survive?",
-        ],
-    },
-    {
         "statement": "Shakespeare used perfect English.",
         "label": "MYTH",
         "explanation": "Shakespeare actually played with language, created new words, and experimented with grammar. His English was changing, just like English today.",
@@ -198,7 +180,7 @@ CARDS: List[Dict[str, object]] = [
         ],
     },
     {
-        "statement": "Dictionaries decide what’s correct.",
+        "statement": "Dictionaries decide what is correct.",
         "label": "MYTH",
         "explanation": "Dictionaries record how people use language. They do not create rules — they describe what speakers already say and write.",
         "discussion": [
@@ -243,15 +225,6 @@ CARDS: List[Dict[str, object]] = [
         ],
     },
     {
-        "statement": "If you make grammar mistakes, you are not intelligent.",
-        "label": "MYTH",
-        "explanation": "Grammar mistakes do not measure intelligence. Many highly intelligent people speak different dialects, multiple languages, or learned a language later in life. Intelligence and language style are not the same thing.",
-        "discussion": [
-            "Why do we judge intelligence based on speech?",
-            "Is fluency the same as intelligence?",
-        ],
-    },
-    {
         "statement": "If you stop speaking your mother tongue, you will forget it completely.",
         "label": "FACT",
         "explanation": "If a language is not used for many years, people may forget words or fluency. However, many people can quickly relearn their first language because it remains stored in memory.",
@@ -285,15 +258,6 @@ CARDS: List[Dict[str, object]] = [
         "discussion": [
             "How much can you learn from subtitles?",
             "Is passive learning enough for fluency?",
-        ],
-    },
-    {
-        "statement": "If someone pauses while speaking, they don’t know what they’re talking about.",
-        "label": "MYTH",
-        "explanation": "Pauses are natural. Our brain needs time to organize thoughts. Even confident speakers pause frequently.",
-        "discussion": [
-            "Do you feel uncomfortable during silence?",
-            "Why do we associate smooth speech with intelligence?",
         ],
     },
     {
