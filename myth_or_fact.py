@@ -467,14 +467,17 @@ def restart_game() -> None:
     st.session_state.answered = False
     st.session_state.message = ""
     st.session_state.score = 0
+    st.session_state.last_action = ""
 
 
 if "deck" not in st.session_state:
     restart_game()
+if "last_action" not in st.session_state:
+    st.session_state.last_action = ""
 
 st.markdown(
     """
-    <style>
+        <style>
     .stApp {
         background:
             radial-gradient(circle at 8% 8%, rgba(255, 199, 221, 0.55), transparent 32%),
@@ -497,7 +500,6 @@ st.markdown(
     [data-testid="stMetricDelta"] {
         color: #2a2543 !important;
     }
-
     .hero {
         background: rgba(255, 255, 255, 0.92);
         border: 1px solid rgba(184, 166, 245, 0.65);
@@ -516,7 +518,6 @@ st.markdown(
         letter-spacing: .3rem;
         opacity: .6;
     }
-
     .flashcard {
         border-radius: 22px;
         padding: 1.2rem;
@@ -558,12 +559,10 @@ st.markdown(
         z-index: 0;
     }
     .flashcard > * { position: relative; z-index: 1; }
-
     .pastel-a { background: linear-gradient(145deg, #ffe6f2 0%, #ffdced 100%); }
     .pastel-b { background: linear-gradient(145deg, #e7f4ff 0%, #dcecff 100%); }
     .pastel-c { background: linear-gradient(145deg, #e6fff2 0%, #d7f8e8 100%); }
     .pastel-d { background: linear-gradient(145deg, #fff8dd 0%, #ffefc4 100%); }
-
     .chip {
         display: inline-block;
         padding: .22rem .7rem;
@@ -575,14 +574,12 @@ st.markdown(
     }
     .myth { background: rgba(255, 110, 146, 0.33); border: 1px solid rgba(201, 63, 105, 0.65); }
     .fact { background: rgba(99, 214, 150, 0.35); border: 1px solid rgba(39, 161, 103, 0.62); }
-
     .subtle { opacity: .88; color: #3b3658; }
     .decor {
         font-size: 1.1rem;
         opacity: 0.75;
         margin-top: .3rem;
     }
-
     .statement-tag {
         display: inline-block;
         background: rgba(255, 255, 255, 0.75);
@@ -620,6 +617,24 @@ st.markdown(
         from { opacity: 0; transform: translateY(8px) scale(.99); }
         to { opacity: 1; transform: translateY(0) scale(1); }
     }
+    @keyframes flipCard {
+        0% { transform: perspective(1000px) rotateY(0deg) scale(1); }
+        50% { transform: perspective(1000px) rotateY(90deg) scale(0.98); }
+        100% { transform: perspective(1000px) rotateY(0deg) scale(1); }
+    }
+    @keyframes nextCard {
+        0% { transform: translateX(26px) scale(0.98); opacity: .15; }
+        100% { transform: translateX(0) scale(1); opacity: 1; }
+    }
+    .animate-flip {
+        animation: flipCard .55s ease;
+        transform-origin: center;
+        will-change: transform;
+    }
+    .animate-next {
+        animation: nextCard .38s ease-out;
+        will-change: transform, opacity;
+    }
     </style>
     """,
     unsafe_allow_html=True,
@@ -653,8 +668,14 @@ if st.session_state.index >= card_total:
 
 card = CARDS[st.session_state.deck[st.session_state.index]]
 pastel_class = ["pastel-a", "pastel-b", "pastel-c", "pastel-d"][st.session_state.index % 4]
+anim_class = ""
+if st.session_state.last_action == "flip":
+    anim_class = "animate-flip"
+elif st.session_state.last_action == "next":
+    anim_class = "animate-next"
+st.session_state.last_action = ""
 
-st.markdown(f"<div class='flashcard {pastel_class}'>", unsafe_allow_html=True)
+st.markdown(f"<div class='flashcard {pastel_class} {anim_class}'>", unsafe_allow_html=True)
 st.markdown("<span class='statement-tag'>✨ Statement Card</span>", unsafe_allow_html=True)
 st.markdown("### 🗣️ Statement")
 st.write(card["statement"])
@@ -689,6 +710,7 @@ if st.session_state.message:
 
 if st.button("🔁 Flip Card" if not st.session_state.flipped else "🙈 Hide Back", use_container_width=True):
     st.session_state.flipped = not st.session_state.flipped
+    st.session_state.last_action = "flip"
     st.rerun()
 
 if st.session_state.flipped:
@@ -709,6 +731,7 @@ if st.session_state.answered and st.button("➡️ Next Card", use_container_wid
     st.session_state.flipped = False
     st.session_state.answered = False
     st.session_state.message = ""
+    st.session_state.last_action = "next"
     st.rerun()
 
 with st.sidebar:
