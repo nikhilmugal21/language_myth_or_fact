@@ -11,10 +11,11 @@ FACTS_PER_ROUND = 5
 MYTHS_PER_ROUND = 10
 
 CARDS: List[Dict[str, object]] = [
+    
     {
         "statement": "Sanskrit is the mother of all Indian languages.",
         "label": "MYTH",
-        "explanation": "Many North Indian languages were influenced by Sanskrit, but South Indian languages like Tamil and Telugu developed from a different language family. Languages can influence each other without being directly related.",
+        "explanation": "Many North Indian languages were influenced by Sanskrit, but South Indian languages like Tamil, Malayalam and Telugu developed from Dravidian language family. Languages can influence each other without being directly related.",
         "discussion": [
             "What does it mean for languages to belong to different families?",
             "How do languages borrow from each other?",
@@ -32,7 +33,7 @@ CARDS: List[Dict[str, object]] = [
     {
         "statement": "Having a strong regional accent means weak English.",
         "label": "MYTH",
-        "explanation": "Accent simply shows where someone is from. It does not reflect intelligence, education, or language skill. Every English speaker in the world speaks with an accent.",
+        "explanation": "Accent simply shows where someone is from. It does not reflect intelligence, education, or language skill. Even every English speaker in the world speaks with an accent.",
         "discussion": [
             "Why are certain accents considered more prestigious?",
             "Have you ever been judged because of your accent?",
@@ -77,7 +78,7 @@ CARDS: List[Dict[str, object]] = [
     {
         "statement": "All South Indians speak the same language.",
         "label": "MYTH",
-        "explanation": "South India has several major languages that are different from each other. Tamil is not the same as Telugu or Kannada. Each has its own history and literature.",
+        "explanation": "South India has several major languages that are different from each other. Tamil is not the same as Telugu or Kannada or Malayalam. Each has its own history and literature.",
         "discussion": [
             "Why do people simplify linguistic diversity?",
             "How does language connect to regional pride?",
@@ -147,7 +148,7 @@ CARDS: List[Dict[str, object]] = [
         ],
     },
     {
-        "statement": "Bambaiyya Hindi is ‘bad Hindi.’",
+        "statement": "Bambaiyya Hindi is ‘wrong Hindi.’",
         "label": "MYTH",
         "explanation": "Bambaiyya Hindi has its own patterns, vocabulary, and cultural context. It is a living urban variety, not ‘wrong’ Hindi. Dialects and mixed varieties are natural forms of language.",
         "discussion": [
@@ -158,7 +159,7 @@ CARDS: List[Dict[str, object]] = [
     {
         "statement": "Hindi and Urdu are completely different languages.",
         "label": "MYTH",
-        "explanation": "In everyday conversation, Hindi and Urdu are very similar and speakers can usually understand each other. The main differences are script and some formal vocabulary.",
+        "explanation": "In everyday conversation, Hindi and Urdu are very similar and speakers can usually understand each other. The main differences are their scripts and some formal vocabularies.",
         "discussion": [
             "When do two ways of speaking become separate languages?",
             "Is the difference based more on language or politics?",
@@ -174,15 +175,6 @@ CARDS: List[Dict[str, object]] = [
         ],
     },
     {
-        "statement": "English will eventually replace all other languages.",
-        "label": "MYTH",
-        "explanation": "English is widely used, but people around the world continue to speak their home languages. Many people use English in addition to their native language, not instead of it.",
-        "discussion": [
-            "Is the world becoming monolingual or multilingual?",
-            "What helps a language survive?",
-        ],
-    },
-    {
         "statement": "Shakespeare used perfect English.",
         "label": "MYTH",
         "explanation": "Shakespeare actually played with language, created new words, and experimented with grammar. His English was changing, just like English today.",
@@ -192,7 +184,7 @@ CARDS: List[Dict[str, object]] = [
         ],
     },
     {
-        "statement": "Dictionaries decide what’s correct.",
+        "statement": "Dictionaries decide what is correct.",
         "label": "MYTH",
         "explanation": "Dictionaries record how people use language. They do not create rules — they describe what speakers already say and write.",
         "discussion": [
@@ -282,15 +274,6 @@ CARDS: List[Dict[str, object]] = [
         ],
     },
     {
-        "statement": "If someone pauses while speaking, they don’t know what they’re talking about.",
-        "label": "MYTH",
-        "explanation": "Pauses are natural. Our brain needs time to organize thoughts. Even confident speakers pause frequently.",
-        "discussion": [
-            "Do you feel uncomfortable during silence?",
-            "Why do we associate smooth speech with intelligence?",
-        ],
-    },
-    {
         "statement": "If a language sounds angry, the speakers must be angry people.",
         "label": "MYTH",
         "explanation": "Some languages may sound harsh or loud to outsiders because of unfamiliar sounds, but that has nothing to do with personality.",
@@ -309,9 +292,9 @@ CARDS: List[Dict[str, object]] = [
         ],
     },
     {
-        "statement": "You lose your culture if you start speaking English.",
+        "statement": "You lose your culture if you start speaking a new language.",
         "label": "MYTH",
-        "explanation": "Learning a new language does not erase your identity. Many people successfully maintain their mother tongue while using English.",
+        "explanation": "Learning a new language does not erase your identity. Many people successfully maintain their mother tongue while using their second language.",
         "discussion": [
             "Can someone belong to multiple linguistic worlds?",
             "Is language loss about choice or pressure?",
@@ -694,11 +677,11 @@ cls = "fact" if label == "FACT" else "myth"
 icon = "✅" if label == "FACT" else "🧠"
 back_content = ""
 if st.session_state.flipped:
-    back_content = f"""
-        <span class='chip {cls}'>{icon} {label}</span>
-        <h4 style='margin: .7rem 0 .4rem 0;'>Explanation</h4>
-        <p class='statement-text'>{html.escape(str(card['explanation']))}</p>
-    """
+    back_content = (
+        f"<span class='chip {cls}'>{icon} {label}</span>"
+        "<h4 style='margin: .7rem 0 .4rem 0;'>Explanation</h4>"
+        f"<p class='statement-text'>{html.escape(str(card['explanation']))}</p>"
+    )
 else:
     back_content = "<p class='statement-text'>Flip the card to see the explanation.</p>"
 
@@ -712,9 +695,7 @@ st.markdown(
             <h3 style='margin: .35rem 0 .25rem 0;'>🗣️ Statement</h3>
             <p class='statement-text'>{statement_html}</p>
         </div>
-        <div class='card-face card-back'>
-            {back_content}
-        </div>
+        <div class='card-face card-back'>{back_content}</div>
       </div>
     </div>
     """,
