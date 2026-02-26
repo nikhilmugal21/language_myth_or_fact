@@ -6,6 +6,8 @@ import streamlit as st
 st.set_page_config(page_title="Tongues of Deception: The Myths we speak", page_icon="📚", layout="centered")
 
 ROUND_SIZE = 15
+FACTS_PER_ROUND = 5
+MYTHS_PER_ROUND = 10
 
 CARDS: List[Dict[str, object]] = [
     {
@@ -72,9 +74,18 @@ CARDS: List[Dict[str, object]] = [
         ],
     },
     {
+        "statement": "English-medium education makes children smarter.",
+        "label": "MYTH",
+        "explanation": "Intelligence does not depend on language. Research shows children often learn better in their mother tongue, especially in early years. Understanding concepts clearly is more important than the language used.",
+        "discussion": [
+            "Is it easier to learn complex ideas in your first language?",
+            "Should schools promote mother-tongue education?",
+        ],
+    },
+    {
         "statement": "All South Indians speak the same language.",
         "label": "MYTH",
-        "explanation": "South India has several major languages that are different from each other. Tamil is not the same as Telugu, Kannada or Malayalam. Each has its own history and literature.",
+        "explanation": "South India has several major languages that are different from each other. Tamil is not the same as Telugu or Kannada. Each has its own history and literature.",
         "discussion": [
             "Why do people simplify linguistic diversity?",
             "How does language connect to regional pride?",
@@ -155,7 +166,7 @@ CARDS: List[Dict[str, object]] = [
     {
         "statement": "Hindi and Urdu are completely different languages.",
         "label": "MYTH",
-        "explanation": "In everyday conversation, Hindi and Urdu are very similar and speakers can usually understand each other. The main differences are scripts and some formal vocabularies.",
+        "explanation": "In everyday conversation, Hindi and Urdu are very similar and speakers can usually understand each other. The main differences are script and some formal vocabulary.",
         "discussion": [
             "When do two ways of speaking become separate languages?",
             "Is the difference based more on language or politics?",
@@ -171,6 +182,15 @@ CARDS: List[Dict[str, object]] = [
         ],
     },
     {
+        "statement": "English will eventually replace all other languages.",
+        "label": "MYTH",
+        "explanation": "English is widely used, but people around the world continue to speak their home languages. Many people use English in addition to their native language, not instead of it.",
+        "discussion": [
+            "Is the world becoming monolingual or multilingual?",
+            "What helps a language survive?",
+        ],
+    },
+    {
         "statement": "Shakespeare used perfect English.",
         "label": "MYTH",
         "explanation": "Shakespeare actually played with language, created new words, and experimented with grammar. His English was changing, just like English today.",
@@ -180,7 +200,7 @@ CARDS: List[Dict[str, object]] = [
         ],
     },
     {
-        "statement": "Dictionaries decide what is correct.",
+        "statement": "Dictionaries decide what’s correct.",
         "label": "MYTH",
         "explanation": "Dictionaries record how people use language. They do not create rules — they describe what speakers already say and write.",
         "discussion": [
@@ -225,6 +245,15 @@ CARDS: List[Dict[str, object]] = [
         ],
     },
     {
+        "statement": "If you make grammar mistakes, you are not intelligent.",
+        "label": "MYTH",
+        "explanation": "Grammar mistakes do not measure intelligence. Many highly intelligent people speak different dialects, multiple languages, or learned a language later in life. Intelligence and language style are not the same thing.",
+        "discussion": [
+            "Why do we judge intelligence based on speech?",
+            "Is fluency the same as intelligence?",
+        ],
+    },
+    {
         "statement": "If you stop speaking your mother tongue, you will forget it completely.",
         "label": "FACT",
         "explanation": "If a language is not used for many years, people may forget words or fluency. However, many people can quickly relearn their first language because it remains stored in memory.",
@@ -261,6 +290,15 @@ CARDS: List[Dict[str, object]] = [
         ],
     },
     {
+        "statement": "If someone pauses while speaking, they don’t know what they’re talking about.",
+        "label": "MYTH",
+        "explanation": "Pauses are natural. Our brain needs time to organize thoughts. Even confident speakers pause frequently.",
+        "discussion": [
+            "Do you feel uncomfortable during silence?",
+            "Why do we associate smooth speech with intelligence?",
+        ],
+    },
+    {
         "statement": "If a language sounds angry, the speakers must be angry people.",
         "label": "MYTH",
         "explanation": "Some languages may sound harsh or loud to outsiders because of unfamiliar sounds, but that has nothing to do with personality.",
@@ -269,12 +307,170 @@ CARDS: List[Dict[str, object]] = [
             "How much of this comes from stereotypes?",
         ],
     },
+    {
+        "statement": "If you translate something word-for-word, it will have the same meaning.",
+        "label": "MYTH",
+        "explanation": "Languages structure ideas differently. A direct word-for-word translation often sounds strange or changes meaning because grammar and cultural expressions differ.",
+        "discussion": [
+            "Have you ever seen a funny translation online?",
+            "Why can literal translation cause confusion?",
+        ],
+    },
+    {
+        "statement": "You lose your culture if you start speaking English.",
+        "label": "MYTH",
+        "explanation": "Learning a new language does not erase your identity. Many people successfully maintain their mother tongue while using English.",
+        "discussion": [
+            "Can someone belong to multiple linguistic worlds?",
+            "Is language loss about choice or pressure?",
+        ],
+    },
+    {
+        "statement": "Grammar rules never change.",
+        "label": "MYTH",
+        "explanation": "Grammar evolves over time. Many forms that were once ‘incorrect’ later became accepted.",
+        "discussion": [
+            "Can you think of grammar rules that changed?",
+            "Who decides when a rule changes?",
+        ],
+    },
+    {
+        "statement": "If two languages share similar words, they must be the same language.",
+        "label": "MYTH",
+        "explanation": "Languages often borrow words from each other. Similar vocabulary does not mean they are identical.",
+        "discussion": [
+            "Can you think of English words from other languages?",
+            "Does borrowing weaken or enrich a language?",
+        ],
+    },
+    {
+        "statement": "People who read more speak more ‘correctly.’",
+        "label": "MYTH",
+        "explanation": "Reading improves vocabulary, but spoken language follows different patterns. Everyday speech often differs from written language.",
+        "discussion": [
+            "Do you speak the same way you write?",
+            "Is spoken language less important than written language?",
+        ],
+    },
+    {
+        "statement": "If a language doesn’t have a word for something, its speakers don’t understand that concept.",
+        "label": "MYTH",
+        "explanation": "People can understand ideas even if their language expresses them differently. Words are tools — not limits of thought.",
+        "discussion": [
+            "Can you describe something even if you don’t know the exact word?",
+            "Does language limit thinking?",
+        ],
+    },
+    {
+        "statement": "You must speak ‘pure’ language without mixing words.",
+        "label": "MYTH",
+        "explanation": "No language is completely pure. All languages borrow words from others over time.",
+        "discussion": [
+            "Can you think of borrowed words in your language?",
+            "Is linguistic purity realistic?",
+        ],
+    },
+    {
+        "statement": "Formal language is always better than informal language.",
+        "label": "MYTH",
+        "explanation": "Different situations require different styles. Informal language is not inferior — it is just used in different contexts.",
+        "discussion": [
+            "Do you speak differently with friends and teachers?",
+            "Is casual language disrespectful?",
+        ],
+    },
+    {
+        "statement": "If a language sounds similar to yours, it must be easy to learn.",
+        "label": "MYTH",
+        "explanation": "Similar languages may share vocabulary, but differences in grammar and pronunciation can still be challenging.",
+        "discussion": [
+            "Have you tried learning a ‘similar’ language?",
+            "Was it easier than expected?",
+        ],
+    },
+    {
+        "statement": "There are languages with no word for ‘yes’ or ‘no.’",
+        "label": "FACT",
+        "explanation": "Some languages answer questions by repeating the verb instead of saying yes or no. For example, instead of saying “yes,” a speaker might say “I did.”",
+        "discussion": [
+            "Is “yes/no” necessary for communication?",
+            "How would this change everyday conversations?",
+        ],
+    },
+    {
+        "statement": "Some languages use clicks as normal speech sounds.",
+        "label": "FACT",
+        "explanation": "In parts of southern Africa, certain languages use click sounds as regular consonants, just like we use “b” or “t.”",
+        "discussion": [
+            "Have you ever heard a click language?",
+            "Why do unfamiliar sounds seem unusual to us?",
+        ],
+    },
+    {
+        "statement": "One word can be a complete sentence in some languages.",
+        "label": "FACT",
+        "explanation": "In some languages, a single long word can include subject, tense, and object — expressing what would take a whole sentence in English.",
+        "discussion": [
+            "Is longer always more complicated?",
+            "How do different languages pack information differently?",
+        ],
+    },
+    {
+        "statement": "You can lose the ability to hear certain sounds as you grow up.",
+        "label": "FACT",
+        "explanation": "Babies can hear many speech sounds from all languages, but as they grow, they become better at hearing the sounds of their own language and may struggle with others.",
+        "discussion": [
+            "Why do adults find foreign pronunciation difficult?",
+            "Can we retrain our ears?",
+        ],
+    },
+    {
+        "statement": "Words can change meaning completely over time.",
+        "label": "FACT",
+        "explanation": "Many English words once meant something very different. For example, ‘awful’ once meant ‘full of awe.’",
+        "discussion": [
+            "Can you think of slang words that changed meaning?",
+            "Why do meanings shift over time?",
+        ],
+    },
+    {
+        "statement": "The same gesture can mean different things in different cultures.",
+        "label": "FACT",
+        "explanation": "Even simple gestures like a thumbs-up can have different meanings depending on the country.",
+        "discussion": [
+            "Can gestures cause misunderstandings?",
+            "Is communication only about words?",
+        ],
+    },
+    {
+        "statement": "You use different grammar when you speak than when you write.",
+        "label": "FACT",
+        "explanation": "Spoken language is usually more relaxed and flexible. Writing tends to follow stricter rules. Both are correct in their own contexts.",
+        "discussion": [
+            "Do you speak the same way you write emails?",
+            "Is spoken language less ‘correct’ than written language?",
+        ],
+    },
 ]
 
 
 def restart_game() -> None:
-    card_count = min(ROUND_SIZE, len(CARDS))
-    st.session_state.deck = random.sample(range(len(CARDS)), card_count)
+    fact_indexes = [idx for idx, card in enumerate(CARDS) if card["label"] == "FACT"]
+    myth_indexes = [idx for idx, card in enumerate(CARDS) if card["label"] == "MYTH"]
+
+    selected_facts = random.sample(fact_indexes, min(FACTS_PER_ROUND, len(fact_indexes)))
+    selected_myths = random.sample(myth_indexes, min(MYTHS_PER_ROUND, len(myth_indexes)))
+
+    deck = selected_facts + selected_myths
+
+    target_size = min(ROUND_SIZE, len(CARDS))
+    if len(deck) < target_size:
+        remaining = [idx for idx in range(len(CARDS)) if idx not in deck]
+        deck.extend(random.sample(remaining, min(target_size - len(deck), len(remaining))))
+
+    random.shuffle(deck)
+
+    st.session_state.deck = deck
     st.session_state.index = 0
     st.session_state.flipped = False
     st.session_state.answered = False
@@ -441,7 +637,7 @@ st.markdown(
 st.markdown(
     """
     <div class='hero'>
-        <h2 style='margin: 0;'>🎯 Tongues of Deception: The Myths we speak</h2>
+        <h2 style='margin: 0;'>🎯 Language Myth or Fact</h2>
         <p class='subtle' style='margin: .3rem 0 0 0;'>Pick Myth or Fact, flip to reveal, and learn from each explanation.</p>
         <div class='decor'>🧠 💬 🌸 📘</div>
     </div>
@@ -526,7 +722,7 @@ if st.session_state.answered and st.button("➡️ Next Card", use_container_wid
 
 with st.sidebar:
     st.header("Settings")
-    st.caption(f"Each game uses a random set of {ROUND_SIZE} statements.")
+    st.caption(f"Each game uses {FACTS_PER_ROUND} facts + {MYTHS_PER_ROUND} myths (total {ROUND_SIZE}).")
     if st.button("🔄 Restart Game", use_container_width=True):
         restart_game()
         st.rerun()
