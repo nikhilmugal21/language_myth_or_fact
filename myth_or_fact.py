@@ -11,7 +11,6 @@ FACTS_PER_ROUND = 5
 MYTHS_PER_ROUND = 10
 
 CARDS: List[Dict[str, object]] = [
-  
     {
         "statement": "Sanskrit is the mother of all Indian languages.",
         "label": "MYTH",
@@ -520,25 +519,41 @@ st.markdown(
         letter-spacing: .3rem;
         opacity: .6;
     }
-    .flashcard {
-        border-radius: 22px;
-        padding: 1.2rem;
+    .flashcard-wrap {
+        perspective: 1200px;
         margin-bottom: .8rem;
-        background-image:
-            radial-gradient(circle at 12% 12%, rgba(255, 255, 255, 0.45) 0%, transparent 26%),
-            radial-gradient(circle at 80% 76%, rgba(255, 255, 255, 0.30) 0%, transparent 30%);
+    }
+    .flashcard {
+        min-height: 280px;
+        border-radius: 22px;
         border: 1px solid rgba(255, 255, 255, 0.95);
         box-shadow: 0 18px 30px rgba(99, 108, 142, 0.24);
         position: relative;
-        overflow: hidden;
+        transform-style: preserve-3d;
+        transition: transform .62s ease, box-shadow .25s ease;
         animation: cardIn .42s ease-out;
-        transition: transform .25s ease, box-shadow .25s ease;
+    }
+    .flashcard.flipped {
+        transform: rotateY(180deg);
     }
     .flashcard:hover {
-        transform: translateY(-2px);
         box-shadow: 0 22px 32px rgba(99, 108, 142, 0.28);
     }
-    .flashcard::after {
+    .card-face {
+        position: absolute;
+        inset: 0;
+        border-radius: 22px;
+        padding: 1.2rem;
+        overflow: hidden;
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+        word-break: break-word;
+        overflow-wrap: anywhere;
+        background-image:
+            radial-gradient(circle at 12% 12%, rgba(255, 255, 255, 0.45) 0%, transparent 26%),
+            radial-gradient(circle at 80% 76%, rgba(255, 255, 255, 0.30) 0%, transparent 30%);
+    }
+    .card-face::after {
         content: "";
         position: absolute;
         right: -45px;
@@ -549,7 +564,7 @@ st.markdown(
         border-radius: 50%;
         z-index: 0;
     }
-    .flashcard::before {
+    .card-face::before {
         content: "";
         position: absolute;
         left: -40px;
@@ -560,7 +575,8 @@ st.markdown(
         border-radius: 50%;
         z-index: 0;
     }
-    .flashcard > * { position: relative; z-index: 1; }
+    .card-face > * { position: relative; z-index: 1; }
+    .card-back { transform: rotateY(180deg); }
     .pastel-a { background: linear-gradient(145deg, #ffe6f2 0%, #ffdced 100%); }
     .pastel-b { background: linear-gradient(145deg, #e7f4ff 0%, #dcecff 100%); }
     .pastel-c { background: linear-gradient(145deg, #e6fff2 0%, #d7f8e8 100%); }
@@ -599,6 +615,8 @@ st.markdown(
         font-size: 1.06rem;
         font-weight: 600;
         line-height: 1.5;
+        overflow-wrap: anywhere;
+        word-break: break-word;
     }
 
     /* Strong contrast buttons */
@@ -626,21 +644,11 @@ st.markdown(
         from { opacity: 0; transform: translateY(8px) scale(.99); }
         to { opacity: 1; transform: translateY(0) scale(1); }
     }
-    @keyframes flipCard {
-        0% { transform: perspective(1000px) rotateY(0deg) scale(1); }
-        50% { transform: perspective(1000px) rotateY(90deg) scale(0.98); }
-        100% { transform: perspective(1000px) rotateY(0deg) scale(1); }
-    }
-    @keyframes nextCard {
+        @keyframes nextCard {
         0% { transform: translateX(26px) scale(0.98); opacity: .15; }
         100% { transform: translateX(0) scale(1); opacity: 1; }
     }
-    .animate-flip {
-        animation: flipCard .55s ease;
-        transform-origin: center;
-        will-change: transform;
-    }
-    .animate-next {
+        .animate-next {
         animation: nextCard .38s ease-out;
         will-change: transform, opacity;
     }
@@ -677,20 +685,37 @@ if st.session_state.index >= card_total:
 
 card = CARDS[st.session_state.deck[st.session_state.index]]
 pastel_class = ["pastel-a", "pastel-b", "pastel-c", "pastel-d"][st.session_state.index % 4]
-anim_class = ""
-if st.session_state.last_action == "flip":
-    anim_class = "animate-flip"
-elif st.session_state.last_action == "next":
-    anim_class = "animate-next"
+anim_class = "animate-next" if st.session_state.last_action == "next" else ""
 st.session_state.last_action = ""
 
 statement_html = html.escape(str(card["statement"]))
+label = str(card["label"])
+cls = "fact" if label == "FACT" else "myth"
+icon = "✅" if label == "FACT" else "🧠"
+back_content = ""
+if st.session_state.flipped:
+    back_content = f"""
+        <span class='chip {cls}'>{icon} {label}</span>
+        <h4 style='margin: .7rem 0 .4rem 0;'>Explanation</h4>
+        <p class='statement-text'>{html.escape(str(card['explanation']))}</p>
+    """
+else:
+    back_content = "<p class='statement-text'>Flip the card to see the explanation.</p>"
+
+flipped_class = "flipped" if st.session_state.flipped else ""
 st.markdown(
     f"""
-    <div class='flashcard {pastel_class} {anim_class}'>
-        <span class='statement-tag'>✨ Statement Card</span>
-        <h3 style='margin: .35rem 0 .25rem 0;'>🗣️ Statement</h3>
-        <p class='statement-text'>{statement_html}</p>
+    <div class='flashcard-wrap {anim_class}'>
+      <div class='flashcard {pastel_class} {flipped_class}'>
+        <div class='card-face card-front'>
+            <span class='statement-tag'>✨ Statement Card</span>
+            <h3 style='margin: .35rem 0 .25rem 0;'>🗣️ Statement</h3>
+            <p class='statement-text'>{statement_html}</p>
+        </div>
+        <div class='card-face card-back'>
+            {back_content}
+        </div>
+      </div>
     </div>
     """,
     unsafe_allow_html=True,
@@ -730,16 +755,9 @@ if st.button("🔁 Flip Card" if not st.session_state.flipped else "🙈 Hide Ba
     st.rerun()
 
 if st.session_state.flipped:
-    label = str(card["label"])
-    cls = "fact" if label == "FACT" else "myth"
-    icon = "✅" if label == "FACT" else "🧠"
-    st.markdown(f"<span class='chip {cls}'>{icon} {label}</span>", unsafe_allow_html=True)
-    st.markdown("#### Explanation")
-    st.write(card["explanation"])
     st.markdown("#### Discussion starters 💬")
     for item in card["discussion"]:
         st.markdown(f"- {item}")
-
 
 if st.session_state.answered and st.button("➡️ Next Card", use_container_width=True):
     st.session_state.index += 1
