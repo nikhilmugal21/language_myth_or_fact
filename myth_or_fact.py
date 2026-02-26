@@ -385,11 +385,33 @@ st.markdown(
     }
     .myth { background: rgba(255, 129, 157, 0.26); border: 1px solid rgba(255, 108, 139, 0.55); }
     .fact { background: rgba(132, 228, 176, 0.28); border: 1px solid rgba(98, 200, 146, 0.55); }
-    .subtle { opacity: .84; }
+    .subtle {
+        opacity: .84;
+    }
     .decor {
         font-size: 1.1rem;
         opacity: 0.75;
         margin-top: .3rem;
+    }
+
+    /* Ensure button text stays visible in all states */
+    .stButton > button {
+        background: #ffffff !important;
+        color: #3d3a56 !important;
+        border: 1px solid #d8d2ef !important;
+        font-weight: 700 !important;
+    }
+    .stButton > button:hover {
+        background: #f4efff !important;
+        color: #2f2a4d !important;
+        border-color: #bfb4e8 !important;
+    }
+    .stButton > button:focus,
+    .stButton > button:focus-visible,
+    .stButton > button:active {
+        color: #2f2a4d !important;
+        border-color: #a895dd !important;
+        box-shadow: 0 0 0 0.2rem rgba(168, 149, 221, 0.25) !important;
     }
     </style>
     """,
