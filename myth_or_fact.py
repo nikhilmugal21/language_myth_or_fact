@@ -1,3 +1,4 @@
+import html
 import random
 from typing import Dict, List
 
@@ -10,6 +11,7 @@ FACTS_PER_ROUND = 5
 MYTHS_PER_ROUND = 10
 
 CARDS: List[Dict[str, object]] = [
+  
     {
         "statement": "Sanskrit is the mother of all Indian languages.",
         "label": "MYTH",
@@ -682,10 +684,17 @@ elif st.session_state.last_action == "next":
     anim_class = "animate-next"
 st.session_state.last_action = ""
 
-st.markdown(f"<div class='flashcard {pastel_class} {anim_class}'>", unsafe_allow_html=True)
-st.markdown("<span class='statement-tag'>✨ Statement Card</span>", unsafe_allow_html=True)
-st.markdown("### 🗣️ Statement")
-st.markdown(f"<p class='statement-text'>{card['statement']}</p>", unsafe_allow_html=True)
+statement_html = html.escape(str(card["statement"]))
+st.markdown(
+    f"""
+    <div class='flashcard {pastel_class} {anim_class}'>
+        <span class='statement-tag'>✨ Statement Card</span>
+        <h3 style='margin: .35rem 0 .25rem 0;'>🗣️ Statement</h3>
+        <p class='statement-text'>{statement_html}</p>
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
 
 if not st.session_state.answered:
     c1, c2 = st.columns(2)
@@ -731,7 +740,6 @@ if st.session_state.flipped:
     for item in card["discussion"]:
         st.markdown(f"- {item}")
 
-st.markdown("</div>", unsafe_allow_html=True)
 
 if st.session_state.answered and st.button("➡️ Next Card", use_container_width=True):
     st.session_state.index += 1
