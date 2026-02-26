@@ -11,11 +11,11 @@ FACTS_PER_ROUND = 5
 MYTHS_PER_ROUND = 10
 
 CARDS: List[Dict[str, object]] = [
-    
+
     {
         "statement": "Sanskrit is the mother of all Indian languages.",
         "label": "MYTH",
-        "explanation": "Many North Indian languages were influenced by Sanskrit, but South Indian languages like Tamil, Malayalam and Telugu developed from Dravidian language family. Languages can influence each other without being directly related.",
+        "explanation": "Many North Indian languages were influenced by Sanskrit, but South Indian languages like Tamil and Telugu developed from a different language family. Languages can influence each other without being directly related.",
         "discussion": [
             "What does it mean for languages to belong to different families?",
             "How do languages borrow from each other?",
@@ -33,7 +33,7 @@ CARDS: List[Dict[str, object]] = [
     {
         "statement": "Having a strong regional accent means weak English.",
         "label": "MYTH",
-        "explanation": "Accent simply shows where someone is from. It does not reflect intelligence, education, or language skill. Even every English speaker in the world speaks with an accent.",
+        "explanation": "Accent simply shows where someone is from. It does not reflect intelligence, education, or language skill. Every English speaker in the world speaks with an accent.",
         "discussion": [
             "Why are certain accents considered more prestigious?",
             "Have you ever been judged because of your accent?",
@@ -78,7 +78,7 @@ CARDS: List[Dict[str, object]] = [
     {
         "statement": "All South Indians speak the same language.",
         "label": "MYTH",
-        "explanation": "South India has several major languages that are different from each other. Tamil is not the same as Telugu or Kannada or Malayalam. Each has its own history and literature.",
+        "explanation": "South India has several major languages that are different from each other. Tamil is not the same as Telugu, Kannada or Malayalam. Each has its own history and literature.",
         "discussion": [
             "Why do people simplify linguistic diversity?",
             "How does language connect to regional pride?",
@@ -175,6 +175,15 @@ CARDS: List[Dict[str, object]] = [
         ],
     },
     {
+        "statement": "English will eventually replace all other languages.",
+        "label": "MYTH",
+        "explanation": "English is widely used, but people around the world continue to speak their home languages. Many people use English in addition to their native language, not instead of it.",
+        "discussion": [
+            "Is the world becoming monolingual or multilingual?",
+            "What helps a language survive?",
+        ],
+    },
+    {
         "statement": "Shakespeare used perfect English.",
         "label": "MYTH",
         "explanation": "Shakespeare actually played with language, created new words, and experimented with grammar. His English was changing, just like English today.",
@@ -184,7 +193,7 @@ CARDS: List[Dict[str, object]] = [
         ],
     },
     {
-        "statement": "Dictionaries decide what is correct.",
+        "statement": "Dictionaries decide what’s correct.",
         "label": "MYTH",
         "explanation": "Dictionaries record how people use language. They do not create rules — they describe what speakers already say and write.",
         "discussion": [
@@ -292,9 +301,9 @@ CARDS: List[Dict[str, object]] = [
         ],
     },
     {
-        "statement": "You lose your culture if you start speaking a new language.",
+        "statement": "You lose your culture if you start speaking English.",
         "label": "MYTH",
-        "explanation": "Learning a new language does not erase your identity. Many people successfully maintain their mother tongue while using their second language.",
+        "explanation": "Learning a new language does not erase your identity. Many people successfully maintain their mother tongue while using English.",
         "discussion": [
             "Can someone belong to multiple linguistic worlds?",
             "Is language loss about choice or pressure?",
@@ -535,7 +544,12 @@ st.markdown(
         background-image:
             radial-gradient(circle at 12% 12%, rgba(255, 255, 255, 0.45) 0%, transparent 26%),
             radial-gradient(circle at 80% 76%, rgba(255, 255, 255, 0.30) 0%, transparent 30%);
+        transition: opacity .18s ease;
     }
+    .card-front { transform: rotateY(0deg); }
+    .card-back { transform: rotateY(180deg); }
+    .flashcard:not(.flipped) .card-back { opacity: 0; }
+    .flashcard.flipped .card-front { opacity: 0; }
     .card-face::after {
         content: "";
         position: absolute;
@@ -559,7 +573,6 @@ st.markdown(
         z-index: 0;
     }
     .card-face > * { position: relative; z-index: 1; }
-    .card-back { transform: rotateY(180deg); }
     .pastel-a { background: linear-gradient(145deg, #ffe6f2 0%, #ffdced 100%); }
     .pastel-b { background: linear-gradient(145deg, #e7f4ff 0%, #dcecff 100%); }
     .pastel-c { background: linear-gradient(145deg, #e6fff2 0%, #d7f8e8 100%); }
@@ -643,7 +656,7 @@ st.markdown(
 st.markdown(
     """
     <div class='hero'>
-        <h2 style='margin: 0;'>🎯 Tongues of Deception: The Myths we speak</h2>
+        <h2 style='margin: 0;'>🎯 Tongues of Deception: The Myths we spea</h2>
         <p class='subtle' style='margin: .3rem 0 0 0;'>Pick Myth or Fact, flip to reveal, and learn from each explanation.</p>
         <div class='decor'>🧠 💬 🌸 📘</div>
     </div>
