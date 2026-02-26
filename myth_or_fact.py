@@ -591,6 +591,13 @@ st.markdown(
         margin-bottom: .3rem;
         font-weight: 700;
     }
+    .statement-text {
+        margin: .15rem 0 .65rem 0;
+        color: #2a2543;
+        font-size: 1.06rem;
+        font-weight: 600;
+        line-height: 1.5;
+    }
 
     /* Strong contrast buttons */
     .stButton > button {
@@ -678,7 +685,7 @@ st.session_state.last_action = ""
 st.markdown(f"<div class='flashcard {pastel_class} {anim_class}'>", unsafe_allow_html=True)
 st.markdown("<span class='statement-tag'>✨ Statement Card</span>", unsafe_allow_html=True)
 st.markdown("### 🗣️ Statement")
-st.write(card["statement"])
+st.markdown(f"<p class='statement-text'>{card['statement']}</p>", unsafe_allow_html=True)
 
 if not st.session_state.answered:
     c1, c2 = st.columns(2)
