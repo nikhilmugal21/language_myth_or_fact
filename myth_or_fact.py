@@ -323,7 +323,7 @@ if "deck" not in st.session_state:
 
 st.markdown(
     """
-    <style>
+        <style>
     .stApp {
         background:
             radial-gradient(circle at 8% 8%, rgba(255, 199, 221, 0.55), transparent 32%),
@@ -331,6 +331,20 @@ st.markdown(
             radial-gradient(circle at 50% 100%, rgba(199, 245, 221, 0.55), transparent 40%),
             linear-gradient(150deg, #fff6fb 0%, #f3f8ff 44%, #f6fff8 100%);
         color: #2d2942;
+    }
+
+    /* Force Streamlit metrics to remain visible */
+    [data-testid="stMetric"] {
+        background: rgba(255, 255, 255, 0.8);
+        border: 1px solid rgba(190, 176, 235, 0.6);
+        border-radius: 14px;
+        padding: .45rem .7rem;
+        box-shadow: 0 6px 14px rgba(116, 105, 165, 0.14);
+    }
+    [data-testid="stMetricLabel"],
+    [data-testid="stMetricValue"],
+    [data-testid="stMetricDelta"] {
+        color: #2a2543 !important;
     }
     .hero {
         background: rgba(255, 255, 255, 0.92);
@@ -354,6 +368,9 @@ st.markdown(
         border-radius: 22px;
         padding: 1.2rem;
         margin-bottom: .8rem;
+        background-image:
+            radial-gradient(circle at 12% 12%, rgba(255, 255, 255, 0.45) 0%, transparent 26%),
+            radial-gradient(circle at 80% 76%, rgba(255, 255, 255, 0.30) 0%, transparent 30%);
         border: 1px solid rgba(255, 255, 255, 0.95);
         box-shadow: 0 18px 30px rgba(99, 108, 142, 0.24);
         position: relative;
@@ -408,6 +425,17 @@ st.markdown(
         font-size: 1.1rem;
         opacity: 0.75;
         margin-top: .3rem;
+    }
+    .statement-tag {
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.75);
+        color: #3b325d;
+        border: 1px dashed rgba(138, 118, 211, 0.6);
+        border-radius: 999px;
+        font-size: .78rem;
+        padding: .18rem .6rem;
+        margin-bottom: .3rem;
+        font-weight: 700;
     }
 
     /* Strong contrast buttons */
@@ -470,6 +498,7 @@ card = CARDS[st.session_state.deck[st.session_state.index]]
 pastel_class = ["pastel-a", "pastel-b", "pastel-c", "pastel-d"][st.session_state.index % 4]
 
 st.markdown(f"<div class='flashcard {pastel_class}'>", unsafe_allow_html=True)
+st.markdown("<span class='statement-tag'>✨ Fresh prompt</span>", unsafe_allow_html=True)
 st.markdown("### 🗣️ Statement")
 st.write(card["statement"])
 
@@ -512,7 +541,7 @@ if st.session_state.flipped:
     st.markdown(f"<span class='chip {cls}'>{icon} {label}</span>", unsafe_allow_html=True)
     st.markdown("#### Explanation")
     st.write(card["explanation"])
-    st.markdown("#### Discussion starters")
+    st.markdown("#### Discussion starters 💬")
     for item in card["discussion"]:
         st.markdown(f"- {item}")
 
