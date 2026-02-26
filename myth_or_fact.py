@@ -323,7 +323,7 @@ if "deck" not in st.session_state:
 
 st.markdown(
     """
-        <style>
+    <style>
     .stApp {
         background:
             radial-gradient(circle at 8% 8%, rgba(255, 199, 221, 0.55), transparent 32%),
@@ -346,6 +346,7 @@ st.markdown(
     [data-testid="stMetricDelta"] {
         color: #2a2543 !important;
     }
+
     .hero {
         background: rgba(255, 255, 255, 0.92);
         border: 1px solid rgba(184, 166, 245, 0.65);
@@ -364,6 +365,7 @@ st.markdown(
         letter-spacing: .3rem;
         opacity: .6;
     }
+
     .flashcard {
         border-radius: 22px;
         padding: 1.2rem;
@@ -405,10 +407,12 @@ st.markdown(
         z-index: 0;
     }
     .flashcard > * { position: relative; z-index: 1; }
+
     .pastel-a { background: linear-gradient(145deg, #ffe6f2 0%, #ffdced 100%); }
     .pastel-b { background: linear-gradient(145deg, #e7f4ff 0%, #dcecff 100%); }
     .pastel-c { background: linear-gradient(145deg, #e6fff2 0%, #d7f8e8 100%); }
     .pastel-d { background: linear-gradient(145deg, #fff8dd 0%, #ffefc4 100%); }
+
     .chip {
         display: inline-block;
         padding: .22rem .7rem;
@@ -420,12 +424,14 @@ st.markdown(
     }
     .myth { background: rgba(255, 110, 146, 0.33); border: 1px solid rgba(201, 63, 105, 0.65); }
     .fact { background: rgba(99, 214, 150, 0.35); border: 1px solid rgba(39, 161, 103, 0.62); }
+
     .subtle { opacity: .88; color: #3b3658; }
     .decor {
         font-size: 1.1rem;
         opacity: 0.75;
         margin-top: .3rem;
     }
+
     .statement-tag {
         display: inline-block;
         background: rgba(255, 255, 255, 0.75);
@@ -498,7 +504,7 @@ card = CARDS[st.session_state.deck[st.session_state.index]]
 pastel_class = ["pastel-a", "pastel-b", "pastel-c", "pastel-d"][st.session_state.index % 4]
 
 st.markdown(f"<div class='flashcard {pastel_class}'>", unsafe_allow_html=True)
-st.markdown("<span class='statement-tag'>✨ Fresh prompt</span>", unsafe_allow_html=True)
+st.markdown("<span class='statement-tag'>✨ Statement Card</span>", unsafe_allow_html=True)
 st.markdown("### 🗣️ Statement")
 st.write(card["statement"])
 
