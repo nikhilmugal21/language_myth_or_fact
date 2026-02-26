@@ -477,7 +477,7 @@ st.markdown(
 st.markdown(
     """
     <div class='hero'>
-        <h2 style='margin: 0;'>🎯 Language Myth or Fact</h2>
+        <h2 style='margin: 0;'>🎯 Tongues of Deception: The Myths we speak</h2>
         <p class='subtle' style='margin: .3rem 0 0 0;'>Pick Myth or Fact, flip to reveal, and learn from each explanation.</p>
         <div class='decor'>🧠 💬 🌸 📘</div>
     </div>
